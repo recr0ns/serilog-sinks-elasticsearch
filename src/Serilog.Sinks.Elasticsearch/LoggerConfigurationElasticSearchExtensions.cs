@@ -21,6 +21,8 @@ using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.Elasticsearch;
 using System.Collections.Specialized;
+using Serilog.Formatting;
+using Serilog.Formatting.Json;
 
 namespace Serilog
 {
@@ -64,6 +66,7 @@ namespace Serilog
         /// <param name="loggerSinkConfiguration">Options for the sink.</param>
         /// <param name="nodeUris">A comma or semi column separated list of URIs for Elasticsearch nodes.</param>
         /// <param name="indexFormat"><see cref="ElasticsearchSinkOptions.IndexFormat"/></param>
+        /// <param name="formatter"><see cref="ElasticsearchSinkOptions.CustomFormatter"/>></param>
         /// <param name="templateName"><see cref="ElasticsearchSinkOptions.TemplateName"/></param>
         /// <param name="typeName"><see cref="ElasticsearchSinkOptions.TypeName"/></param>
         /// <param name="batchPostingLimit"><see cref="ElasticsearchSinkOptions.BatchPostingLimit"/></param>
@@ -80,6 +83,7 @@ namespace Serilog
             this LoggerSinkConfiguration loggerSinkConfiguration,
             string nodeUris,
             string indexFormat = null,
+            ITextFormatter formatter = null,
             string templateName = null,
             string typeName = "logevent",
             int batchPostingLimit = 50,
@@ -115,6 +119,8 @@ namespace Serilog
             {
                 options.TypeName = typeName;
             }
+
+            options.CustomFormatter = formatter ?? new JsonFormatter();
 
             options.BatchPostingLimit = batchPostingLimit;
             options.Period = TimeSpan.FromSeconds(period);

@@ -113,6 +113,7 @@ In your `appsettings.json` file, under the `Serilog` node, :
           "nodeUris": "http://localhost:9200;http://remotehost:9200/",
           "indexFormat": "custom-index-{0:yyyy.MM}",
           "templateName": "myCustomTemplate",
+          "formatter": "Serilog.Formatting.Json.JsonFormatter, Serilog",
           "typeName": "myCustomLogEventType",
           "pipelineName": "myCustomPipelineName",
           "batchPostingLimit": 50,
